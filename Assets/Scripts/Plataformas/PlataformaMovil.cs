@@ -6,7 +6,7 @@ public class PlataformaMovil : MonoBehaviour
 {
     public Vector3 puntoInicial; //Punto inicial de la plataforma
     public Vector3 puntoFinal; //Punto final de la plataforma
-    public float velocidad = 2.0f; //Velocidad de la plataforma
+    public float velocidad = 5.0f; //Velocidad de la plataforma
 
     private bool moviendoHaciaPuntoFinal = true;
     
@@ -32,9 +32,9 @@ public class PlataformaMovil : MonoBehaviour
     {
         if (moviendoHaciaPuntoFinal)
         {
-            transform.position = Vector3.MoveTowards(transform.position, puntoFinal, velocidad * Time.deltaTime);
+            Vector3 direccion = (puntoFinal - transform.position).normalized;
 
-            Debug.Log("Moviendo hacia Punto Final: " + transform.position);
+            transform.Translate(direccion * velocidad * Time.deltaTime, Space.World);
 
         }
         if (transform.position == puntoFinal)
@@ -42,22 +42,26 @@ public class PlataformaMovil : MonoBehaviour
             moviendoHaciaPuntoFinal = false;
 
             Debug.Log("Cambio de dirección: Hacia el punto inicial");
-        }
 
+            if (transform.position != puntoFinal)
+            {
+                moviendoHaciaPuntoFinal = false;
+            }
+            
+        }
         else
         {
-            transform.position = Vector3.MoveTowards(transform.position, puntoInicial, velocidad * Time.deltaTime);
+            Vector3 direccion = (puntoInicial - transform.position).normalized;
 
-            Debug.Log("Moviendo hacia Punto Incial" + transform.position);
+            transform.Translate(direccion * velocidad * Time.deltaTime, Space.World);
 
-            if (Vector3.Distance(transform.position, puntoInicial) < 1f)
+            if (transform.position == puntoInicial)
             {
                 moviendoHaciaPuntoFinal = true;
-
-                Debug.Log("Cambio de dirección: Hacia el punto Final");
             }
-
         }
+
+        
 
     }
 

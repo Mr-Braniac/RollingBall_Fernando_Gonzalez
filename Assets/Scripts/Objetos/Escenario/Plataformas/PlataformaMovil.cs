@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlataformaMovil : MonoBehaviour
 {
-    public Vector3 puntoInicial; //Punto inicial de la plataforma
-    public Vector3 puntoFinal; //Punto final de la plataforma
+    private Vector3 puntoInicial; //Punto inicial de la plataforma
+    private Vector3 puntoFinal; //Punto final de la plataforma
     public float velocidad = 5.0f; //Velocidad de la plataforma
 
     private bool moviendoHaciaPuntoFinal = true;

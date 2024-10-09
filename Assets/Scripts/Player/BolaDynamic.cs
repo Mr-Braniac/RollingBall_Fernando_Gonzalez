@@ -9,17 +9,19 @@ using TMPro;
 public class BolaDynamic : MonoBehaviour
 {
     //private GameManager gameManager;
-    [SerializeField] private AudioClip clipSalto;
+    //[SerializeField] private AudioClip clipSalto;
 
     private Rigidbody rb;
     [SerializeField] private float fuerza;
     [SerializeField] private float fuezaSalto = 5;
     private float inputH;
     private float inputV;
-    [SerializeField] private TMP_Text textoScore;
+    //[SerializeField] private TMP_Text textoScore;
     private int score;
     private Vector3 posicionSpawn;
     [SerializeField] private LayerMask queEsSaltable;
+
+    private int Puntos;
 
 
     void Start()
@@ -70,7 +72,7 @@ public class BolaDynamic : MonoBehaviour
 
     }
 
-    private void ActualizarUi()
+    /*private void ActualizarUi()
     {
         score++;
         textoScore.text = "Score: " + score;
@@ -102,7 +104,16 @@ public class BolaDynamic : MonoBehaviour
             transform.position = posicionSpawn;
         }
     }
+    */
 
-
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Moneda"))
+        {
+            Puntos++;
+            Debug.Log("Puntos " + Puntos);
+        }
+        
+    }
 
 }

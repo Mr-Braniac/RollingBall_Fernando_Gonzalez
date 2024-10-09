@@ -4,65 +4,39 @@ using UnityEngine;
 
 public class PlataformaMovil : MonoBehaviour
 {
-    private Vector3 puntoInicial; //Punto inicial de la plataforma
-    private Vector3 puntoFinal; //Punto final de la plataforma
-    public float velocidad = 5.0f; //Velocidad de la plataforma
 
-    private bool moviendoHaciaPuntoFinal = true;
-    
+    [SerializeField] private Vector3 direccion; //Dirección del movimiento
+    [SerializeField] private float velocidad; //Velocidad del movimiento
+    [SerializeField] private float TiempoDeVuelta; //El tiempo en el cual cambiamos de dirección
+    private Rigidbody rb;
+    private float timer; //Cronómetro.
 
-    // Start is called before the first frame update
     void Start()
     {
-        //seteamos la ubicación inicial del objeto
-        puntoInicial = transform.position;
+        rb = GetComponent<Rigidbody>();
 
-        Debug.Log("Posicion Inicial: " + puntoInicial);
-        Debug.Log("Posición Final: " + puntoFinal);
+        // En el velocity, ya esta medido por segundo, por lo cual no es necesario hacer Time.deltaTime.
+        rb.velocity = direccion * velocidad;
     }
 
     // Update is called once per frame
     void Update()
     {
-        MoverPlataforma();
+        timer += Time.deltaTime;
+
+        // A mi timer le SUMO 1 POR SEGUNDO
+        // timer = timer + 1 * Time.deltaTime;
+        if (timer > TiempoDeVuelta)
+        {
+            // Cambiar dirección. ()
+            direccion *= -1;
+            rb.velocity = direccion * velocidad; //Refresco la velocidad nueva.
+            // Reset tiempo
+            timer = 0;
+
+        }
 
     }
 
-    void MoverPlataforma()
-    {
-        if (moviendoHaciaPuntoFinal)
-        {
-            Vector3 direccion = (puntoFinal - transform.position).normalized;
-
-            transform.Translate(direccion * velocidad * Time.deltaTime, Space.World);
-
-        }
-        if (transform.position == puntoFinal)
-        {
-            moviendoHaciaPuntoFinal = false;
-
-            Debug.Log("Cambio de dirección: Hacia el punto inicial");
-
-            if (transform.position != puntoFinal)
-            {
-                moviendoHaciaPuntoFinal = false;
-            }
-            
-        }
-        else
-        {
-            Vector3 direccion = (puntoInicial - transform.position).normalized;
-
-            transform.Translate(direccion * velocidad * Time.deltaTime, Space.World);
-
-            if (transform.position == puntoInicial)
-            {
-                moviendoHaciaPuntoFinal = true;
-            }
-        }
-
-        
-
-    }
 
 }

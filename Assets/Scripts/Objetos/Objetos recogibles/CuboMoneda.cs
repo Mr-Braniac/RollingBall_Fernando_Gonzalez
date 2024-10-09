@@ -5,7 +5,7 @@ using UnityEngine;
 public class CuboMoneda : MonoBehaviour
 {
     [SerializeField] private float velocidadGiro;
-    [SerializeField] private AudioClip clipMoneda;
+    //[SerializeField] private AudioClip clipMoneda;
     //private GameManager gameManager;
 
 
@@ -19,10 +19,18 @@ public class CuboMoneda : MonoBehaviour
     {
         //El cubo ha de totar a 30º/s de forma CONSTANTE en el eje "y" global.
         transform.Rotate(new Vector3(0, 1, 0) * velocidadGiro * Time.deltaTime, Space.World);
+
+
     }
 
 
-    //M´todo que se ejecuta JUDTO ANTES de destruirnos
+    //M´todo que se ejecuta JUNTO ANTES de destruirnos
+    private void OnCollisionEnter(Collision collision)
+    {
+        
+    }
+
+
     private void OnDestroy()
     {
         if (gameObject != null)
